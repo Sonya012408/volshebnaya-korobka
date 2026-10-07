@@ -279,17 +279,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .qt small{display:block;margin-top:14px;font-size:14px;color:var(--mute)}
 @media(max-width:860px){.quotes{grid-template-columns:1fr;gap:34px}}
 
-/* checklist */
-.check{margin-top:56px;display:flex;flex-direction:column;gap:10px}
-.ci{display:flex;gap:18px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:20px 24px;cursor:pointer;transition:border-color .2s,background .2s;user-select:none}
-.ci:hover{border-color:#4A4A40}
-.ci .bx{flex:0 0 28px;height:28px;border-radius:8px;border:2px solid var(--mute);display:flex;align-items:center;justify-content:center;font-weight:900;color:transparent;transition:all .2s;margin-top:2px}
-.ci.on{border-color:var(--lime)}
-.ci.on .bx{background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
-.ci b{display:block;font-size:18px}
-.ci span{color:var(--mute);font-size:15px}
-.score{margin-top:24px;font-family:var(--mono);font-size:15px;color:var(--mute)}
-.score b{color:var(--lime)}
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:56px 0 70px;font-size:14px;color:var(--mute)}
@@ -301,7 +290,7 @@ footer p{max-width:760px;margin-top:8px}
 <body>
 <div class="progress" id="progress"></div>
 <nav class="nav">
-  <span class="logo">Constraint Call · разбор</span>
+  <span class="logo">Разбор звонка</span>
   <span class="links">
     <a href="#math">Экономика</a>
     <a href="#diagnosis">Диагноз</a>
@@ -341,8 +330,8 @@ footer p{max-width:760px;margin-top:8px}
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>Выручка <i>$180k/мес</i></span><span>80 клиентов</span><span>CAC <i>$150</i></span><span>Прибыль с клиента <i>$4 500</i></span><span>Окупаемость <i>1 : 30</i></span><span>Meta Ads <i class="red">в 10 раз дороже</i></span><span>Цель: +40 клиентов</span>
-    <span>Выручка <i>$180k/мес</i></span><span>80 клиентов</span><span>CAC <i>$150</i></span><span>Прибыль с клиента <i>$4 500</i></span><span>Окупаемость <i>1 : 30</i></span><span>Meta Ads <i class="red">в 10 раз дороже</i></span><span>Цель: +40 клиентов</span>
+    <span>Выручка <i>$180 тыс./мес</i></span><span>80 клиентов</span><span>Клиент стоит <i>$150</i></span><span>Прибыль с клиента <i>$4 500</i></span><span>Окупаемость <i>1 : 30</i></span><span>Реклама в Meta <i class="red">в 10 раз дороже</i></span><span>Цель: +40 клиентов</span>
+    <span>Выручка <i>$180 тыс./мес</i></span><span>80 клиентов</span><span>Клиент стоит <i>$150</i></span><span>Прибыль с клиента <i>$4 500</i></span><span>Окупаемость <i>1 : 30</i></span><span>Реклама в Meta <i class="red">в 10 раз дороже</i></span><span>Цель: +40 клиентов</span>
   </div>
 </div>
 
@@ -353,7 +342,7 @@ footer p{max-width:760px;margin-top:8px}
     <h2 class="rv d1">Агентство, которое продаёт лиды клинингу. И само живёт на своём же продукте.</h2>
     <p class="intro rv d2">Outbound Hero пишет холодные письма от имени компаний по уборке офисов и коммерческих помещений и гарантирует им «квалифицированные лиды». Клиенты платят помесячно, уйти можно за 15 дней. Себе агентство продаёт той же машиной — как обычному клиенту.</p>
     <div class="facts">
-      <div class="fact rv"><b data-count="180" data-pre="$" data-suf="k">$180k</b><span>выручка в месяц, плато 5–6 месяцев</span></div>
+      <div class="fact rv"><b data-count="180" data-pre="$" data-suf=" тыс.">$180 тыс.</b><span>выручка в месяц, плато 5–6 месяцев</span></div>
       <div class="fact rv d1"><b data-count="80">80</b><span>клиентов сейчас, цель — 120 к весне</span></div>
       <div class="fact rv d2"><b>35–40%</b><span>маржа до зарплаты собственника</span></div>
       <div class="fact rv d3"><b>5,25 мес</b><span>в среднем живёт клиент</span></div>
@@ -389,22 +378,22 @@ footer p{max-width:760px;margin-top:8px}
     <p class="intro rv d2">Сколько платит клиент, сколько живёт, сколько из этого — прибыль, и сколько стоит его привести. Всё остальное — производные.</p>
 
     <div class="gloss rv">
-      <div><b>LTV</b><p>Сколько денег клиент принесёт за всё время, пока с тобой.</p></div>
-      <div><b>LTGP</b><p>То же, но в чистой прибыли: LTV × маржа. Главная цифра звонка.</p></div>
-      <div><b>CAC</b><p>Сколько стоит привести одного платящего клиента.</p></div>
-      <div><b>QL</b><p>Квалифицированный лид — заявка, которая подходит под гарантию.</p></div>
-      <div><b>Show rate</b><p>Доля людей, которые реально пришли на назначенный созвон.</p></div>
-      <div><b>Churn</b><p>Отток: клиенты, которые ушли.</p></div>
+      <div><b>Пожизненная выручка (LTV)</b><p>Сколько денег клиент принесёт за всё время, пока с тобой.</p></div>
+      <div><b>Прибыль с клиента (LTGP)</b><p>То же, но в чистой прибыли: выручка × маржа. Главная цифра звонка.</p></div>
+      <div><b>Стоимость клиента (CAC)</b><p>Сколько стоит привести одного платящего клиента.</p></div>
+      <div><b>Квалифицированный лид</b><p>Заявка, которая засчитывается по гарантии агентства.</p></div>
+      <div><b>Доходимость</b><p>Доля людей, которые реально пришли на назначенный созвон.</p></div>
+      <div><b>Отток</b><p>Клиенты, которые ушли.</p></div>
     </div>
 
     <div class="ladder">
       <div class="step rv"><span class="i">01</span><div class="t"><b>Средний чек</b><span>в месяц, с учётом скидок</span></div><div class="v">$2 300</div></div>
       <div class="step rv"><span class="i">02</span><div class="t"><b>× 5,25 месяца жизни клиента</b><span>LTV = 2 300 × 5,25</span></div><div class="v">$12 075</div></div>
-      <div class="step rv"><span class="i">03</span><div class="t"><b>× 37,5% маржи</b><span>LTGP — чистыми с одного клиента</span></div><div class="v">≈ $4 500</div></div>
-      <div class="step rv"><span class="i">04</span><div class="t"><b>Стоимость привлечения через холодные письма</b><span>$750/мес × 3 мес ÷ 15 клиентов</span></div><div class="v">$150</div></div>
+      <div class="step rv"><span class="i">03</span><div class="t"><b>× 37,5% маржи</b><span>прибыль с одного клиента за всё время</span></div><div class="v">≈ $4 500</div></div>
+      <div class="step rv"><span class="i">04</span><div class="t"><b>Стоимость привлечения через холодные письма</b><span>$2 250 за 3 месяца ÷ 15 клиентов</span></div><div class="v">$150</div></div>
       <div class="step final rv"><span class="i">=</span><div class="t"><b>Каждый $1 на привлечение</b><span>$4 500 ÷ $150 · не выручки — чистой прибыли</span></div><div class="v">× 30</div></div>
     </div>
-    <p class="note rv">И это не «когда-нибудь». Уже в первый месяц клиент приносит $2 300 × 37,5% = <b style="color:var(--lime)">$862</b> чистыми при затратах $150 — это <b style="color:var(--ink)">5,75 : 1</b>. Сам Рави своим клиентам ставит планку <b style="color:var(--ink)">2 : 1 за первые 30 дней</b>. Спенсер её почти утроил.</p>
+    <p class="note rv">И это не «когда-нибудь». Уже в первый месяц клиент приносит $2 300 × 37,5% = <b style="color:var(--lime)">$862</b> чистыми при затратах $150 — это <b style="color:var(--ink)">5,75 : 1</b>. Сам Рави своим клиентам ставит планку <b style="color:var(--ink)">2 : 1 за первые 30 дней</b>.</p>
   </div>
 </section>
 
@@ -413,7 +402,7 @@ footer p{max-width:760px;margin-top:8px}
   <div class="wrap">
     <span class="num rv">03 — Каналы</span>
     <h2 class="rv d1">Один канал работает за копейки. Спенсеру интересен другой.</h2>
-    <p class="intro rv d2">У агентства три источника: холодные письма, реклама в Meta и YouTube. За июль–сентябрь закрыли ~25 клиентов: 15 из писем, 1–2 из рекламы, остальное — франшизы и YouTube.</p>
+    <p class="intro rv d2">У агентства три источника: холодные письма, реклама в Meta (Facebook и Instagram) и YouTube. За июль–сентябрь закрыли ~25 клиентов: 15 из писем, 1–2 из рекламы, остальное — франшизы и YouTube.</p>
 
     <div class="vs">
       <div class="ch win rv">
@@ -427,7 +416,7 @@ footer p{max-width:760px;margin-top:8px}
         <p>Агентство гонит на себя ту же кампанию, что и клиентам, и получает даже больше лидов. Лучший аргумент на продаже: «это сработало на нас».</p>
       </div>
       <div class="ch lose rv d1">
-        <h3>Meta Ads <em>дорого</em></h3>
+        <h3>Реклама в Meta <em>дорого</em></h3>
         <dl>
           <div><dt>Бюджет 15.07–15.09</dt><dd>$3 593</dd></div>
           <div><dt>Цена лида</dt><dd>$7,60 (было $4)</dd></div>
@@ -443,8 +432,8 @@ footer p{max-width:760px;margin-top:8px}
     <div class="bars rv" id="bars">
       <h4>Стоимость одного клиента</h4>
       <div class="bar"><label>Письма</label><div class="track"><div class="fill g" data-w="8.6">$150</div></div></div>
-      <div class="bar"><label>Meta Ads</label><div class="track"><div class="fill r" data-w="100">≈ $1 750</div></div></div>
-      <p class="cap">Рави: «Давай про Meta даже не будем говорить. Все цифры указывают в одну сторону — идти глубже в холодные письма».</p>
+      <div class="bar"><label>Реклама Meta</label><div class="track"><div class="fill r" data-w="100">≈ $1 750</div></div></div>
+      <p class="cap">Рави: «Давай про рекламу в Meta даже не будем говорить. Все цифры указывают в одну сторону — идти глубже в холодные письма».</p>
     </div>
   </div>
 </section>
@@ -485,7 +474,7 @@ footer p{max-width:760px;margin-top:8px}
         <b>Дотянуть удержание с 5,5 до 8 месяцев</b>
         <ul>
           <li>непонятно, какими действиями</li>
-          <li>результат не гарантирован</li>
+          <li>результат заранее неизвестен</li>
           <li>бьёшься со структурным оттоком: агентство — первый счёт, который режут, когда у клиента что-то идёт не так</li>
         </ul>
       </div>
@@ -494,7 +483,7 @@ footer p{max-width:760px;margin-top:8px}
         <b>Отправлять больше холодных писем</b>
         <ul>
           <li>сил нужно в разы меньше</li>
-          <li>конверсия из писем в клиентов уже известна</li>
+          <li>сколько писем дают одного клиента — уже известно</li>
           <li>каждый $1 даёт $30</li>
         </ul>
       </div>
@@ -521,12 +510,12 @@ footer p{max-width:760px;margin-top:8px}
       <div class="lv r rv d1">
         <div class="big red">5</div>
         <div class="cap">допущений</div>
-        <h3>Раскачать Meta Ads</h3>
+        <h3>Раскачать рекламу в Meta</h3>
         <ol>
           <li>Доходимость вырастет с 25–30% до уровня писем</li>
           <li>Цена лида снова упадёт</li>
           <li>Конверсия в сделку вырастет</li>
-          <li>Эти клиенты проживут столько же<i>95% клиентов из писем — по рекламным данных нет</i></li>
+          <li>Эти клиенты проживут столько же<i>Почти все клиенты (по оценке Рави, ~95%) пришли из писем — по рекламным данных нет</i></li>
           <li>CAC упадёт примерно в 10 раз</li>
         </ol>
       </div>
@@ -543,8 +532,8 @@ footer p{max-width:760px;margin-top:8px}
       <p class="cq rv">«Тогда просто дави на канал, <span class="lime">пока он и правда не упрётся</span>».</p>
       <div class="cards">
         <div class="card rv"><b>$100 МЛН В ГОД</b><p>Есть компании такого размера, которые живут только на холодных письмах.</p></div>
-        <div class="card rv d1"><b>$10 000 НА РЕКЛАМУ</b><p>При CPM около $40 это ~250 000 показов по одному разу. «Я исчерпал рынок» — это ложное убеждение.</p></div>
-        <div class="card rv d2"><b>+40 КЛИЕНТОВ</b><p>Это не рост с $180k до $1,8 млн в месяц. Для такой цели потолка письма не увидят.</p></div>
+        <div class="card rv d1"><b>$10 000 НА РЕКЛАМУ</b><p>При средней цене $40 за тысячу показов это ~250 000 человек, увидевших рекламу один раз. «Я исчерпал рынок» — это ложное убеждение.</p></div>
+        <div class="card rv d2"><b>+40 КЛИЕНТОВ</b><p>Это не рост со $180 тыс. до $1,8 млн в месяц. Для такой цели потолка письма не увидят.</p></div>
       </div>
     </div>
     <div class="kpi rv">
@@ -563,7 +552,7 @@ footer p{max-width:760px;margin-top:8px}
   <div class="wrap">
     <span class="num rv">07 — Покрути сам</span>
     <h2 class="rv d1">Цена +$700 — и прибыль с клиента почти ×2.</h2>
-    <p class="intro rv d2">Спенсер уже собирался поднять базовый тариф с $2 800 до $3 400. Рави: «Тот, кто может платить $2 800, может платить и $3 500. Никто и глазом не моргнёт». Доплата идёт в прибыль целиком — себестоимость не меняется.</p>
+    <p class="intro rv d2">Спенсер уже собирался поднять базовый тариф с $2 800 до $3 400. Рави: «Тот, кто может платить $2 800, может платить и $3 500. Никто и глазом не моргнёт». Доплату он считает чистой прибылью: ~$700 × 5,5 месяца ≈ $3 800 сверху к нынешним $4 500.</p>
 
     <div class="calc">
       <div class="ctrl rv">
@@ -580,13 +569,13 @@ footer p{max-width:760px;margin-top:8px}
         <div class="rg">
           <label>Стоимость привлечения <output id="o-cac">$150</output></label>
           <input type="range" id="cac" min="50" max="2000" step="25" value="150">
-          <small>$150 — письма, ≈$1 750 — Meta Ads</small>
+          <small>$150 — письма, ≈ $1 750 — реклама в Meta</small>
         </div>
         <div class="btn-row">
           <button class="chip" data-p="0,5.25,150">Как сейчас</button>
           <button class="chip" data-p="700,5.25,150">Цена $3 500</button>
-          <button class="chip" data-p="700,5.25,1750">Цена $3 500 + Meta</button>
-          <button class="chip" data-p="0,8,150">Удержание 8 мес</button>
+          <button class="chip" data-p="0,5.25,1750">Клиенты из Meta</button>
+          <button class="chip" data-p="0,8,150">Удержание 8 мес (цель Спенсера)</button>
         </div>
       </div>
       <div class="res rv d1">
@@ -596,11 +585,11 @@ footer p{max-width:760px;margin-top:8px}
         <div class="rows">
           <div><span>Прибыль с клиента за жизнь</span><b id="r-ltgp">$4 528</b></div>
           <div><span>Чистыми в первый месяц</span><b id="r-first">$713</b></div>
-          <div><span>Прибыль с 40 новых клиентов</span><b id="r-40">$175 125</b></div>
+          <div><span>Окупаемость в первый месяц</span><b id="r-40">5,75 : 1</b></div>
         </div>
       </div>
     </div>
-    <p class="calc-note rv">Формула: (2 300 × 0,375 + повышение) × месяцы. Первый месяц = прибыль месяца − CAC.<br>Сравни «Цена $3 500» и «Удержание 8 мес»: повышение цены даёт даже больше. А ведь это одно решение, тогда как удержание — месяцы работы.</p>
+    <p class="calc-note rv">Формула Рави: (2 300 × 0,375 + повышение) × месяцы. Первый месяц = прибыль месяца − стоимость клиента.<br>Ориентиры из звонка: планка Рави — окупаемость 2 : 1 за первые 30 дней; канал «вне нормы», когда клиент стоит больше прибыли первого месяца.</p>
   </div>
 </section>
 
@@ -613,8 +602,8 @@ footer p{max-width:760px;margin-top:8px}
       <div class="pl rv"><div class="n">01</div><div><h3>Сделать выполнение «пуленепробиваемым»</h3><p>Прежде чем уходить в продажи, убедиться, что команда без тебя выдержит +40 клиентов — 20–30 подключений в месяц. «Пуленепробиваемо» не значит «без проблем». Это значит: клиентов больше, а твоего времени в выполнении — не больше. Иначе уйдёшь в продажи, и всё, что держалось на тебе, развалится.</p><span class="tg">сначала тыл</span></div></div>
       <div class="pl rv"><div class="n">02</div><div><h3>Разобрать базу: кто живёт 5,5 месяцев</h3><p>Все расчёты стоят на цифре 5,5 месяца. Найти портрет клиентов, которые держатся, и сделать его планкой для отдела продаж. Иначе нагонишь субподрядчиков без юрлица, они уйдут на втором месяце — и через полгода не поймёшь, что сломалось.</p><span class="tg">защитить допущение</span></div></div>
       <div class="pl rv"><div class="n">03</div><div><h3>Отдать удержание директору по клиентам</h3><p>KPI на первые 3 месяца: не уронить 5,5. Потом ежеквартально: 5,5 → 6 → 6,5, с бонусом за рост. Сам заходишь, только если в еженедельных цифрах видишь, что показатель ползёт вниз. «Хороший сотрудник хочет владеть задачей от начала до конца».</p><span class="tg">убрать руку из банки с печеньем</span></div></div>
-      <div class="pl rv"><div class="n">04</div><div><h3>Удвоить холодные письма</h3><p>Главный рычаг. Давить, пока стоимость клиента не подберётся к $862. Цель — +40 клиентов не к весне, а к концу года.</p><span class="tg">основной фокус</span></div></div>
-      <div class="pl rv"><div class="n">05</div><div><h3>Удвоить YouTube — но не ради лидов</h3><p>Перед созвоном люди идут смотреть канал. Видео прогревают тех, кто пришёл из писем, и поднимают конверсию. Раз в месяц → дважды, раз в неделю → дважды в неделю.</p><span class="tg">усилитель писем</span></div></div>
+      <div class="pl rv"><div class="n">04</div><div><h3>Удвоить холодные письма</h3><p>Главный рычаг. Давить, пока стоимость клиента не подберётся к $862. Рави считает, что +40 клиентов реально набрать не к весне, а к концу года.</p><span class="tg">основной фокус</span></div></div>
+      <div class="pl rv"><div class="n">05</div><div><h3>Удвоить YouTube — но не ради лидов</h3><p>Перед созвоном люди идут смотреть канал. Выпускать вдвое больше видео — не ради клиентов с YouTube, а потому что это помогает письмам. И поставить выпуск на систему.</p><span class="tg">усилитель писем</span></div></div>
       <div class="pl rv"><div class="n">06</div><div><h3>Протестировать цену $3 400–3 500</h3><p>Проверять две вещи: держится ли прибыль с клиента и держатся ли 5,5 месяца. Если уходить станут чуть раньше, но прибыль та же — не страшно: освобождается место под новых.</p><span class="tg">почти ×2 прибыли</span></div></div>
       <div class="pl rv"><div class="n">07</div><div><h3>Упёрлись — новая ниша, а не новый канал</h3><p>Не Meta, а та же машина писем в соседнюю вертикаль: мойка окон, новогодняя подсветка и другие коммерческие услуги. Сначала выжать клининг, потом 1–2 соседние ниши тем же сценарием.</p><span class="tg">то же, но шире</span></div></div>
       <div class="pl skip rv"><div class="n">✕</div><div><h3>Пока не делать: допродажи и новые услуги</h3><p>Слишком много допущений: нужно ли это людям, купят ли, заплатят ли, не съест ли новое предложение основное. Получишь два бизнеса внутри одного при марже 35–40%. Если и добавлять — только то, что не конкурирует с основным. Пример Рави: его агентство нанимает клиентам продажников, потому что после роста маркетинга им некогда брать звонки. «Тебе нужен аккаунт-менеджер <i>потому что</i> мы починили маркетинг, а не <i>вместо</i>».</p><span class="tg">потом</span></div></div>
@@ -627,15 +616,15 @@ footer p{max-width:760px;margin-top:8px}
   <div class="wrap">
     <span class="num rv">09 — Куда это ведёт</span>
     <h2 class="rv d1">«Неплохая зарплата — примерно через 12 месяцев».</h2>
-    <p class="intro rv d2">Сценарий Рави «чисто ради интереса»: три ниши по той же схеме. Агентство на холодных письмах, которое обслуживает офлайн-бизнесы, можно реально продать.</p>
+    <p class="intro rv d2">Сценарий Рави «чисто ради интереса»: три ниши по той же схеме. По его словам, у агентства на холодных письмах, которое обслуживает офлайн-бизнесы, есть реальный путь к продаже.</p>
     <div class="eq rv">
-      <div class="term"><b>$180k</b><small>в месяц сейчас</small></div>
+      <div class="term"><b>$180 тыс.</b><small>в месяц сейчас</small></div>
       <span class="op">×3</span>
-      <div class="term"><b>$540k</b><small>три ниши</small></div>
+      <div class="term"><b>$540 тыс.</b><small>три ниши</small></div>
       <span class="op">×30%</span>
-      <div class="term"><b>$162k</b><small>чистыми в месяц</small></div>
+      <div class="term"><b>$162 тыс.</b><small>чистыми в месяц</small></div>
     </div>
-    <p class="exit-note rv">Маржу Рави осознанно занижает с 35–40% до 30% — на масштабе она проседает. Сервисный бизнес в этой отрасли может продаваться с мультипликатором 4–6. По нашему счёту, если умножать годовую прибыль (~$1,9 млн), это порядка $8–12 млн.</p>
+    <p class="exit-note rv">Маржу Рави берёт 30% вместо нынешних 35–40% — на масштабе она проседает. Сервисный бизнес в этой отрасли, по его словам, может продаваться с мультипликатором 4–6. И оговаривается: «если ты вообще этого захочешь».</p>
   </div>
 </section>
 
@@ -643,7 +632,7 @@ footer p{max-width:760px;margin-top:8px}
 <section class="sec">
   <div class="wrap">
     <span class="num rv">10 — Забрать с собой</span>
-    <h2 class="rv d1">Три мысли, которые работают не только в агентствах.</h2>
+    <h2 class="rv d1">Три фразы из звонка.</h2>
     <div class="quotes">
       <div class="qt rv"><p>«Все говорят „мы больше всех заботимся о клиентах“. Все говорят „у нас лучший сервис“. Значение имеет одно: сколько чистой прибыли тебе приносит клиент».</p><small>Про то, что такое хороший бизнес</small></div>
       <div class="qt rv d1"><p>«Лучшей системы продаж не существует: человек попробовал твой продукт, и он сработал на нём самом».</p><small>Про то, почему агентство продаёт себя своим же методом</small></div>
@@ -652,29 +641,11 @@ footer p{max-width:760px;margin-top:8px}
   </div>
 </section>
 
-<!-- 11 CHECKLIST -->
-<section class="sec" style="background:var(--bg2)">
-  <div class="wrap">
-    <span class="num rv">11 — Примерь на свой бизнес</span>
-    <h2 class="rv d1">Есть ли у тебя волшебная коробка?</h2>
-    <p class="intro rv d2">Отметь, на что можешь ответить цифрой, а не ощущением.</p>
-    <div class="check" id="check">
-      <div class="ci rv"><div class="bx">✓</div><div><b>Знаю, сколько чистой прибыли приносит клиент за всё время</b><span>Не выручки — прибыли. LTV × маржа.</span></div></div>
-      <div class="ci rv"><div class="bx">✓</div><div><b>Знаю стоимость клиента по каждому каналу отдельно</b><span>Не «реклама в целом», а $150 против $1 750.</span></div></div>
-      <div class="ci rv"><div class="bx">✓</div><div><b>Понимаю, сколько из $1 вернётся и через сколько</b><span>Через месяц и за всю жизнь клиента.</span></div></div>
-      <div class="ci rv"><div class="bx">✓</div><div><b>Назову одно главное ограничение роста</b><span>И проверил, что это не «то, чем мне приятнее заниматься».</span></div></div>
-      <div class="ci rv"><div class="bx">✓</div><div><b>Посчитал, сколько допущений в моём плане роста</b><span>Чем их меньше, тем надёжнее рычаг.</span></div></div>
-      <div class="ci rv"><div class="bx">✓</div><div><b>Знаю, при какой стоимости клиента канал «сломан»</b><span>Порог в цифрах, а не «стало как-то дорого».</span></div></div>
-    </div>
-    <p class="score" id="score">Отмечено: <b>0 из 6</b></p>
-  </div>
-</section>
-
 <footer>
   <div class="wrap">
     <div class="big">Делай больше<br>того, что <span>работает.</span></div>
-    <p><b style="color:var(--ink)">Источник:</b> видео «After $35M in Revenue, Watch Me Double This $2M Agency in Less Than 30 Min» из серии Constraint Call — Рави Абувала разбирает агентство Спенсера, Outbound Hero.</p>
-    <p>Конспект сделан по расшифровке. Цифры — со слов гостя и в округлениях Рави; оценка стоимости бизнеса в разделе 09 — наш пересчёт. Рекламные вставки ведущего опущены.</p>
+    <p><b style="color:var(--ink)">Источник:</b> видео «After $35M in Revenue, Watch Me Double This $2M Agency in Less Than 30 Min» («После $35 млн выручки: удваиваю агентство на $2 млн меньше чем за 30 минут») из серии Constraint Call. Рави Абувала разбирает агентство Спенсера, Outbound Hero.</p>
+    <p>Конспект сделан по расшифровке звонка. Все цифры — со слов Спенсера и в расчётах Рави, с их округлениями. Рекламные вставки ведущего опущены.</p>
   </div>
 </footer>
 
@@ -724,21 +695,14 @@ footer p{max-width:760px;margin-top:8px}
     document.getElementById('ratio').textContent=ratio>=10?fmt(ratio):'$'+ratio.toFixed(1).replace('.',',');
     document.getElementById('r-ltgp').textContent=fmt(ltgp);
     var first=monthly-cac;document.getElementById('r-first').textContent=(first<0?'−':'')+fmt(Math.abs(first));
-    document.getElementById('r-40').textContent=fmt((ltgp-cac)*40);
-    var v=ratio>=20?'Коробка печатает деньги. Клади столько, сколько влезет.':ratio>=6?'Очень прибыльно. Масштабировать, не раздумывая.':ratio>=3?'Работает, но уже без запаса. Следи за удержанием.':'Канал не окупается как надо. Это не тот рычаг.';
-    if(first<0&&ratio>=3)v+=' Первый месяц в минусе — нужен запас денег.';
+    var r1=monthly/cac;document.getElementById('r-40').textContent=r1.toFixed(2).replace('.',',')+' : 1';
+    var v=first<0?'Клиент стоит дороже прибыли первого месяца — по критерию Рави канал вне нормы.':r1>=2?'Выше планки Рави: 2 : 1 за первые 30 дней.':'Ниже планки Рави 2 : 1 за первые 30 дней.';
     document.getElementById('verdict').textContent=v;
   }
   [R,M,C].forEach(function(i){i.addEventListener('input',calc)});
   document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){var p=b.dataset.p.split(',');R.value=p[0];M.value=p[1];C.value=p[2];calc()})});
   calc();
 
-  // checklist
-  var items=document.querySelectorAll('.ci'),score=document.getElementById('score');
-  items.forEach(function(it){it.addEventListener('click',function(){it.classList.toggle('on');
-    var k=document.querySelectorAll('.ci.on').length;
-    score.innerHTML='Отмечено: <b>'+k+' из 6</b>'+(k===6?' — у тебя есть коробка. Клади в неё.':k>=3?' — половина картины есть, остальное посчитай.':'');
-  })});
 })();
 </script>
 </body>
