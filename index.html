@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Волшебная коробка</title>
+<meta name="description" content="Разбор Constraint Call: как агентство на $180 000 в месяц ищет проблему не там, и почему $1 в холодные письма приносит $30 чистой прибыли.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D0D0B;
+  --bg2:#161613;
+  --line:#2A2A25;
+  --ink:#F1EDE4;
+  --mute:#8C887E;
+  --lime:#D4FF3A;
+  --lime-ink:#121400;
+  --red:#FF5533;
+  --paper:#F1EDE4;
+  --paper-ink:#0D0D0B;
+  --display:'Unbounded',system-ui,sans-serif;
+  --body:'Manrope',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --w:1180px;
+  --g:clamp(16px,4vw,40px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--lime);color:var(--lime-ink)}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 var(--g)}
+.mono{font-family:var(--mono)}
+.lime{color:var(--lime)}
+.red{color:var(--red)}
+.mute{color:var(--mute)}
+mark{background:var(--lime);color:var(--lime-ink);padding:0 .15em;border-radius:2px}
+mark.red{background:var(--red);color:#fff}
+section{position:relative}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px var(--g);background:linear-gradient(var(--bg) 40%,transparent);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.nav a{color:var(--mute);text-decoration:none;margin-left:20px}
+.nav a:hover{color:var(--lime)}
+.nav .logo{color:var(--ink);font-weight:700}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--lime);width:0;z-index:60}
+@media(max-width:760px){.nav .links{display:none}}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 70px}
+.hero-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:center}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 var(--red);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,85,51,.7)}70%{box-shadow:0 0 0 10px rgba(255,85,51,0)}100%{box-shadow:0 0 0 0 rgba(255,85,51,0)}}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(44px,7.4vw,104px);line-height:.95;letter-spacing:-.03em}
+h1 .swap{display:inline-block;color:var(--lime)}
+.lead{font-size:clamp(18px,1.6vw,21px);color:#CFCABF;max-width:560px;margin-top:30px}
+.lead b{color:var(--ink)}
+.who{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap}
+.who div{border-left:2px solid var(--line);padding-left:14px}
+.who small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.who span{font-weight:700}
+
+/* magic box */
+.box-stage{position:relative;display:flex;flex-direction:column;align-items:center;padding-top:40px}
+.box{position:relative;width:min(300px,72vw);aspect-ratio:1/0.82;background:var(--lime);color:var(--lime-ink);border-radius:18px;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;box-shadow:0 30px 80px -20px rgba(212,255,58,.35),inset 0 -8px 0 rgba(0,0,0,.12);transition:transform .15s}
+.box.bump{animation:bump .35s}
+@keyframes bump{30%{transform:scale(1.04,.96)}60%{transform:scale(.98,1.02)}}
+.box .slot{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:44%;height:12px;background:var(--lime-ink);border-radius:8px}
+.box .label{font-family:var(--display);font-weight:900;font-size:28px;line-height:1}
+.box .sub{font-family:var(--mono);font-size:12px;margin-top:6px;opacity:.75}
+.coin{position:absolute;top:-34px;left:50%;width:46px;height:46px;margin-left:-23px;border-radius:50%;background:var(--ink);color:var(--bg);font-family:var(--mono);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;z-index:2}
+.coin.drop{animation:drop .5s ease-in forwards}
+@keyframes drop{0%{opacity:1;transform:translateY(-40px) rotateY(0)}80%{opacity:1;transform:translateY(58px) rotateY(540deg) scaleY(.6)}100%{opacity:0;transform:translateY(70px) scaleY(.2)}}
+.burst{position:absolute;font-family:var(--display);font-weight:900;color:var(--lime);font-size:30px;pointer-events:none;animation:fly 1.3s ease-out forwards;z-index:3;text-shadow:0 4px 20px rgba(0,0,0,.6)}
+@keyframes fly{0%{opacity:0;transform:translate(0,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-140px) scale(1.15)}}
+.box-btn{margin-top:30px;font-family:var(--display);font-weight:800;font-size:16px;background:transparent;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:16px 30px;cursor:pointer;transition:all .15s}
+.box-btn:hover{background:var(--ink);color:var(--bg)}
+.box-btn:active{transform:scale(.96)}
+.tally{display:flex;gap:30px;margin-top:22px;font-family:var(--mono);font-size:13px;color:var(--mute)}
+.tally b{display:block;font-size:26px;color:var(--ink)}
+.tally .out b{color:var(--lime)}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.box-stage{padding-top:10px}}
+
+/* marquee */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:20px 0;background:var(--bg2)}
+.marquee-track{display:flex;width:max-content;animation:mq 40s linear infinite}
+.marquee span{font-family:var(--display);font-weight:800;font-size:clamp(20px,2.4vw,30px);white-space:nowrap;padding:0 28px;display:flex;align-items:center;gap:28px}
+.marquee span::after{content:"✦";color:var(--lime);font-size:.7em}
+.marquee i{font-style:normal;color:var(--lime)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* section heads */
+.sec{padding:clamp(80px,11vw,150px) 0}
+.num{font-family:var(--mono);font-size:13px;color:var(--lime);letter-spacing:.1em;margin-bottom:18px;display:block}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(32px,4.6vw,62px);line-height:1.02;letter-spacing:-.025em;max-width:900px}
+.intro{font-size:clamp(18px,1.5vw,20px);color:#CFCABF;max-width:680px;margin-top:24px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.marquee-track{animation:none}}
+
+/* business facts */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:60px}
+.fact{padding:28px 22px 28px 0;border-bottom:1px solid var(--line)}
+.fact+.fact{padding-left:22px;border-left:1px solid var(--line)}
+.fact b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(30px,3.6vw,48px);letter-spacing:-.02em;line-height:1}
+.fact span{display:block;color:var(--mute);font-size:15px;margin-top:10px}
+@media(max-width:860px){.facts{grid-template-columns:1fr 1fr}.fact:nth-child(3){padding-left:0;border-left:0}}
+
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px;align-items:end}
+.plan{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:28px}
+.plan.hot{background:var(--lime);color:var(--lime-ink);border-color:var(--lime);padding-top:44px;position:relative}
+.plan.hot .tag{position:absolute;top:14px;left:28px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.plan h3{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.7;font-weight:500}
+.plan .price{font-family:var(--display);font-weight:900;font-size:clamp(34px,3.6vw,46px);margin:14px 0 4px;letter-spacing:-.02em}
+.plan .price small{font-size:.38em;font-weight:600;opacity:.6}
+.plan p{font-size:15px;opacity:.85}
+.plan.dim{opacity:.55}
+.note{margin-top:22px;font-size:15px;color:var(--mute);max-width:760px}
+@media(max-width:860px){.plans{grid-template-columns:1fr}}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:56px}
+.gloss div{background:var(--bg);padding:20px 22px}
+.gloss b{font-family:var(--mono);color:var(--lime);font-size:14px}
+.gloss p{font-size:15px;color:#CFCABF;margin-top:4px}
+@media(max-width:860px){.gloss{grid-template-columns:1fr}}
+
+/* math ladder */
+.ladder{margin-top:60px;display:flex;flex-direction:column;gap:12px}
+.step{display:grid;grid-template-columns:52px 1fr auto;gap:22px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:22px 26px}
+.step .i{font-family:var(--mono);color:var(--mute);font-size:14px}
+.step .t b{display:block;font-size:19px}
+.step .t span{color:var(--mute);font-size:15px;font-family:var(--mono)}
+.step .v{font-family:var(--display);font-weight:800;font-size:clamp(24px,3vw,38px);letter-spacing:-.02em;white-space:nowrap}
+.step.final{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+.step.final .i,.step.final .t span{color:rgba(18,20,0,.6)}
+.step.final .v{font-size:clamp(40px,6vw,76px);font-weight:900}
+@media(max-width:640px){.step{grid-template-columns:1fr;gap:6px;padding:20px}.step .i{display:none}}
+
+/* channels */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:56px}
+.ch{border-radius:20px;padding:32px;border:1px solid var(--line);background:var(--bg2)}
+.ch.win{border-color:var(--lime)}
+.ch.lose{border-color:rgba(255,85,51,.5)}
+.ch h3{font-family:var(--display);font-weight:800;font-size:26px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ch h3 em{font-style:normal;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+.ch.win h3 em{background:var(--lime);color:var(--lime-ink)}
+.ch.lose h3 em{background:var(--red);color:#fff}
+.ch dl{margin-top:22px}
+.ch dl div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px dashed var(--line);font-size:16px}
+.ch dt{color:var(--mute)}
+.ch dd{font-family:var(--mono);font-weight:700;text-align:right}
+.ch p{font-size:15px;color:#CFCABF;margin-top:18px}
+@media(max-width:860px){.vs{grid-template-columns:1fr}}
+.bars{margin-top:44px;background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:32px}
+.bars h4{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500;margin-bottom:22px}
+.bar{display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:center;margin-bottom:14px}
+.bar label{font-size:15px;font-weight:700}
+.bar .track{height:46px;background:#1E1E1A;border-radius:10px;overflow:hidden;position:relative}
+.bar .fill{height:100%;width:0;border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding:0 14px;font-family:var(--mono);font-weight:700;font-size:15px;transition:width 1.4s cubic-bezier(.2,.7,.2,1);white-space:nowrap}
+.bar .fill.g{background:var(--lime);color:var(--lime-ink)}
+.bar .fill.r{background:var(--red);color:#fff}
+.bars .cap{font-size:15px;color:var(--mute);margin-top:12px}
+@media(max-width:560px){.bar{grid-template-columns:1fr;gap:6px}}
+
+/* diagnosis (paper) */
+.paper{background:var(--paper);color:var(--paper-ink)}
+.paper .num{color:var(--red)}
+.paper .intro{color:#3C3A35}
+.dialog{margin-top:60px;display:flex;flex-direction:column;gap:18px;max-width:900px}
+.bubble{border-radius:22px;padding:24px 28px;font-size:clamp(18px,1.8vw,23px);line-height:1.4;max-width:720px;font-weight:500}
+.bubble small{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;opacity:.6;font-weight:500}
+.bubble.s{background:#E2DCCF;border-bottom-left-radius:4px}
+.bubble.r{background:var(--paper-ink);color:var(--ink);align-self:flex-end;border-bottom-right-radius:4px}
+.bubble.r mark{background:var(--lime)}
+.errors{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:70px}
+.err{border:2px solid var(--paper-ink);border-radius:20px;padding:30px}
+.err .x{font-family:var(--display);font-weight:900;font-size:56px;line-height:1;color:var(--red)}
+.err h3{font-family:var(--display);font-weight:800;font-size:22px;margin:16px 0 10px;line-height:1.15}
+.err p{font-size:16px;color:#3C3A35}
+.err .ex{margin-top:16px;padding-top:16px;border-top:1px dashed #B5AFA2;font-size:15px}
+@media(max-width:860px){.errors{grid-template-columns:1fr}}
+.effort{margin-top:70px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.eff{border-radius:20px;padding:30px;background:#E2DCCF}
+.eff.go{background:var(--paper-ink);color:var(--ink)}
+.eff h4{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.6;font-weight:500}
+.eff b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(22px,2.4vw,30px);margin:12px 0;line-height:1.1}
+.eff ul{list-style:none;font-size:16px}
+.eff li{padding:6px 0 6px 26px;position:relative}
+.eff li::before{content:"—";position:absolute;left:0;opacity:.5}
+.eff.go li::before{content:"✓";color:var(--lime);opacity:1}
+@media(max-width:860px){.effort{grid-template-columns:1fr}}
+
+/* lever */
+.lever{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:56px}
+.lv{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:32px}
+.lv .big{font-family:var(--display);font-weight:900;font-size:clamp(70px,9vw,120px);line-height:.9;letter-spacing:-.04em}
+.lv .cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin:8px 0 22px}
+.lv h3{font-family:var(--display);font-weight:800;font-size:22px;margin-bottom:16px}
+.lv ol{list-style:none;counter-reset:a}
+.lv li{counter-increment:a;padding:12px 0 12px 40px;position:relative;border-top:1px solid var(--line);font-size:16px}
+.lv li::before{content:counter(a);position:absolute;left:0;top:11px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700}
+.lv.g li::before{background:var(--lime);color:var(--lime-ink)}
+.lv.r li::before{background:var(--red);color:#fff}
+.lv li i{font-style:normal;color:var(--mute);font-size:14px;display:block}
+@media(max-width:860px){.lever{grid-template-columns:1fr}}
+
+/* ceiling */
+.ceiling{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;margin-top:56px;align-items:start}
+.cq{font-family:var(--display);font-weight:800;font-size:clamp(28px,3.6vw,50px);line-height:1.05;letter-spacing:-.02em}
+.cards{display:flex;flex-direction:column;gap:14px}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.card b{font-family:var(--mono);color:var(--lime);font-size:14px;letter-spacing:.04em}
+.card p{margin-top:6px;font-size:16px;color:#CFCABF}
+@media(max-width:860px){.ceiling{grid-template-columns:1fr;gap:36px}}
+.kpi{margin-top:56px;background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:32px}
+.kpi h4{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.scale{position:relative;height:64px;margin:46px 0 18px;background:linear-gradient(90deg,var(--lime) 0%,var(--lime) 17%,#2E3214 17%,#2E3214 100%);border-radius:12px}
+.scale .pin{position:absolute;top:-34px;transform:translateX(-50%);font-family:var(--mono);font-size:13px;font-weight:700;white-space:nowrap}
+.scale .pin::after{content:"";position:absolute;left:50%;top:24px;width:2px;height:74px;background:currentColor}
+.scale .p1{left:17%;color:var(--lime)}
+.scale .p2{left:100%;transform:translateX(-100%);color:var(--red)}
+.scale .p2::after{left:auto;right:0}
+.kpi p{font-size:16px;color:#CFCABF;max-width:780px}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:56px}
+.ctrl{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:30px}
+.rg label{display:flex;justify-content:space-between;font-size:16px;font-weight:700;margin-bottom:12px;gap:12px}
+.rg label output{font-family:var(--mono);color:var(--lime)}
+.rg small{display:block;color:var(--mute);font-size:13px;margin-top:8px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;background:#2A2A25;border-radius:6px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--lime);cursor:pointer;border:4px solid var(--bg)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--lime);cursor:pointer;border:4px solid var(--bg)}
+.res{background:var(--lime);color:var(--lime-ink);border-radius:20px;padding:32px;display:flex;flex-direction:column}
+.res h4{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;opacity:.65}
+.res .ratio{font-family:var(--display);font-weight:900;font-size:clamp(70px,10vw,130px);line-height:.9;letter-spacing:-.04em;margin:10px 0 6px}
+.res .verdict{font-weight:800;font-size:18px;min-height:54px}
+.res .rows{margin-top:auto;padding-top:24px}
+.res .rows div{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(18,20,0,.18);font-size:15px}
+.res .rows b{font-family:var(--mono)}
+.calc-note{font-size:14px;color:var(--mute);margin-top:16px;font-family:var(--mono)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:13px;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:9px 14px;cursor:pointer}
+.chip:hover{border-color:var(--lime);color:var(--lime)}
+@media(max-width:860px){.calc{grid-template-columns:1fr}}
+
+/* plan timeline */
+.plan-list{margin-top:60px;position:relative}
+.pl{display:grid;grid-template-columns:110px 1fr;gap:30px;padding:34px 0;border-top:1px solid var(--line)}
+.pl .n{font-family:var(--display);font-weight:900;font-size:56px;line-height:.9;color:var(--lime);letter-spacing:-.04em}
+.pl h3{font-family:var(--display);font-weight:800;font-size:clamp(22px,2.4vw,30px);line-height:1.1;letter-spacing:-.01em}
+.pl p{margin-top:12px;color:#CFCABF;max-width:720px;font-size:17px}
+.pl .tg{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--mute)}
+.pl.skip .n{color:var(--red)}
+@media(max-width:640px){.pl{grid-template-columns:1fr;gap:10px}.pl .n{font-size:40px}}
+
+/* exit */
+.exit{background:var(--lime);color:var(--lime-ink)}
+.exit .num{color:var(--lime-ink);opacity:.6}
+.exit .intro{color:#2B2F0A}
+.eq{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(10px,2vw,24px);margin-top:60px;font-family:var(--display);font-weight:900;letter-spacing:-.03em}
+.eq .term{display:flex;flex-direction:column}
+.eq .term b{font-size:clamp(34px,5.4vw,78px);line-height:1}
+.eq .term small{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.65;margin-top:8px;letter-spacing:.04em}
+.eq .op{font-size:clamp(28px,4vw,56px);opacity:.45}
+.exit-note{margin-top:40px;font-size:15px;max-width:760px;opacity:.75}
+
+/* quotes */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.qt{border-top:3px solid var(--lime);padding-top:22px}
+.qt p{font-family:var(--display);font-weight:600;font-size:clamp(19px,1.8vw,23px);line-height:1.25}
+.qt small{display:block;margin-top:14px;font-size:14px;color:var(--mute)}
+@media(max-width:860px){.quotes{grid-template-columns:1fr;gap:34px}}
+
+/* checklist */
+.check{margin-top:56px;display:flex;flex-direction:column;gap:10px}
+.ci{display:flex;gap:18px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:20px 24px;cursor:pointer;transition:border-color .2s,background .2s;user-select:none}
+.ci:hover{border-color:#4A4A40}
+.ci .bx{flex:0 0 28px;height:28px;border-radius:8px;border:2px solid var(--mute);display:flex;align-items:center;justify-content:center;font-weight:900;color:transparent;transition:all .2s;margin-top:2px}
+.ci.on{border-color:var(--lime)}
+.ci.on .bx{background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
+.ci b{display:block;font-size:18px}
+.ci span{color:var(--mute);font-size:15px}
+.score{margin-top:24px;font-family:var(--mono);font-size:15px;color:var(--mute)}
+.score b{color:var(--lime)}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:56px 0 70px;font-size:14px;color:var(--mute)}
+footer .big{font-family:var(--display);font-weight:900;font-size:clamp(38px,7vw,96px);color:var(--ink);line-height:.95;letter-spacing:-.03em;margin-bottom:40px}
+footer .big span{color:var(--lime)}
+footer p{max-width:760px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<nav class="nav">
+  <span class="logo">Constraint Call · разбор</span>
+  <span class="links">
+    <a href="#math">Экономика</a>
+    <a href="#diagnosis">Диагноз</a>
+    <a href="#calc">Калькулятор</a>
+    <a href="#plan">План</a>
+  </span>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">Разбор звонка · 30 минут</div>
+      <h1>Кладёшь <span class="swap">$1.</span><br>Забираешь <span class="swap">$30.</span></h1>
+      <p class="lead">Агентство Спенсера делает <b>$180 000 в месяц</b> и полгода стоит на месте. Он уверен, что проблема — в удержании клиентов. Рави Абувала за полчаса доказывает на цифрах: проблема в том, что <b>он слишком мало кладёт в коробку</b>.</p>
+      <div class="who">
+        <div><small>Разбирает</small><span>Рави Абувала</span></div>
+        <div><small>Гость</small><span>Спенсер, Outbound Hero</span></div>
+        <div><small>Ниша</small><span>Холодные письма для клининга</span></div>
+      </div>
+    </div>
+    <div class="box-stage">
+      <div class="box" id="box">
+        <div class="coin" id="coin">$1</div>
+        <div class="slot"></div>
+        <div class="label">Холодные<br>письма</div>
+        <div class="sub">$1 внутрь → $30 чистыми</div>
+      </div>
+      <button class="box-btn" id="feed">Положить $1 →</button>
+      <div class="tally">
+        <div>Положено<b id="tin">$0</b></div>
+        <div class="out">Вышло чистыми<b id="tout">$0</b></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Выручка <i>$180k/мес</i></span><span>80 клиентов</span><span>CAC <i>$150</i></span><span>Прибыль с клиента <i>$4 500</i></span><span>Окупаемость <i>1 : 30</i></span><span>Meta Ads <i class="red">в 10 раз дороже</i></span><span>Цель: +40 клиентов</span>
+    <span>Выручка <i>$180k/мес</i></span><span>80 клиентов</span><span>CAC <i>$150</i></span><span>Прибыль с клиента <i>$4 500</i></span><span>Окупаемость <i>1 : 30</i></span><span>Meta Ads <i class="red">в 10 раз дороже</i></span><span>Цель: +40 клиентов</span>
+  </div>
+</div>
+
+<!-- 01 BUSINESS -->
+<section class="sec">
+  <div class="wrap">
+    <span class="num rv">01 — Пациент</span>
+    <h2 class="rv d1">Агентство, которое продаёт лиды клинингу. И само живёт на своём же продукте.</h2>
+    <p class="intro rv d2">Outbound Hero пишет холодные письма от имени компаний по уборке офисов и коммерческих помещений и гарантирует им «квалифицированные лиды». Клиенты платят помесячно, уйти можно за 15 дней. Себе агентство продаёт той же машиной — как обычному клиенту.</p>
+    <div class="facts">
+      <div class="fact rv"><b data-count="180" data-pre="$" data-suf="k">$180k</b><span>выручка в месяц, плато 5–6 месяцев</span></div>
+      <div class="fact rv d1"><b data-count="80">80</b><span>клиентов сейчас, цель — 120 к весне</span></div>
+      <div class="fact rv d2"><b>35–40%</b><span>маржа до зарплаты собственника</span></div>
+      <div class="fact rv d3"><b>5,25 мес</b><span>в среднем живёт клиент</span></div>
+    </div>
+
+    <div class="plans">
+      <div class="plan dim rv">
+        <h3>Младший · почти не продают</h3>
+        <div class="price">$1 500–2 000<small> /мес</small></div>
+        <p>5–10 квалифицированных лидов в месяц</p>
+      </div>
+      <div class="plan hot rv d1">
+        <span class="tag">70% клиентов здесь</span>
+        <h3>Базовый</h3>
+        <div class="price">$2 800<small> /мес</small></div>
+        <p>Минимум 10 лидов, ожидаемо 10–20. Франшизе — $2 600 со скидкой</p>
+      </div>
+      <div class="plan rv d2">
+        <h3>Старший</h3>
+        <div class="price">$4 800<small> /мес</small></div>
+        <p>Минимум 20 лидов, ожидаемо 20–40. Для зоны обслуживания до 75 миль</p>
+      </div>
+    </div>
+    <p class="note rv">С учётом скидок средний клиент платит <b style="color:var(--ink)">≈ $2 300 в месяц</b>. Проблема Спенсера звучит знакомо: «Кажется, что я плачу бизнесу, а себе — меньше, чем вижу в цифрах. Я плохо понимаю, куда уходят деньги».</p>
+  </div>
+</section>
+
+<!-- 02 MATH -->
+<section class="sec" id="math" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="num rv">02 — Экономика одного клиента</span>
+    <h2 class="rv d1">Рави не спрашивает про сервис. Он спрашивает четыре числа.</h2>
+    <p class="intro rv d2">Сколько платит клиент, сколько живёт, сколько из этого — прибыль, и сколько стоит его привести. Всё остальное — производные.</p>
+
+    <div class="gloss rv">
+      <div><b>LTV</b><p>Сколько денег клиент принесёт за всё время, пока с тобой.</p></div>
+      <div><b>LTGP</b><p>То же, но в чистой прибыли: LTV × маржа. Главная цифра звонка.</p></div>
+      <div><b>CAC</b><p>Сколько стоит привести одного платящего клиента.</p></div>
+      <div><b>QL</b><p>Квалифицированный лид — заявка, которая подходит под гарантию.</p></div>
+      <div><b>Show rate</b><p>Доля людей, которые реально пришли на назначенный созвон.</p></div>
+      <div><b>Churn</b><p>Отток: клиенты, которые ушли.</p></div>
+    </div>
+
+    <div class="ladder">
+      <div class="step rv"><span class="i">01</span><div class="t"><b>Средний чек</b><span>в месяц, с учётом скидок</span></div><div class="v">$2 300</div></div>
+      <div class="step rv"><span class="i">02</span><div class="t"><b>× 5,25 месяца жизни клиента</b><span>LTV = 2 300 × 5,25</span></div><div class="v">$12 075</div></div>
+      <div class="step rv"><span class="i">03</span><div class="t"><b>× 37,5% маржи</b><span>LTGP — чистыми с одного клиента</span></div><div class="v">≈ $4 500</div></div>
+      <div class="step rv"><span class="i">04</span><div class="t"><b>Стоимость привлечения через холодные письма</b><span>$750/мес × 3 мес ÷ 15 клиентов</span></div><div class="v">$150</div></div>
+      <div class="step final rv"><span class="i">=</span><div class="t"><b>Каждый $1 на привлечение</b><span>$4 500 ÷ $150 · не выручки — чистой прибыли</span></div><div class="v">× 30</div></div>
+    </div>
+    <p class="note rv">И это не «когда-нибудь». Уже в первый месяц клиент приносит $2 300 × 37,5% = <b style="color:var(--lime)">$862</b> чистыми при затратах $150 — это <b style="color:var(--ink)">5,75 : 1</b>. Сам Рави своим клиентам ставит планку <b style="color:var(--ink)">2 : 1 за первые 30 дней</b>. Спенсер её почти утроил.</p>
+  </div>
+</section>
+
+<!-- 03 CHANNELS -->
+<section class="sec">
+  <div class="wrap">
+    <span class="num rv">03 — Каналы</span>
+    <h2 class="rv d1">Один канал работает за копейки. Спенсеру интересен другой.</h2>
+    <p class="intro rv d2">У агентства три источника: холодные письма, реклама в Meta и YouTube. За июль–сентябрь закрыли ~25 клиентов: 15 из писем, 1–2 из рекламы, остальное — франшизы и YouTube.</p>
+
+    <div class="vs">
+      <div class="ch win rv">
+        <h3>Холодные письма <em>победитель</em></h3>
+        <dl>
+          <div><dt>Расходы на канал</dt><dd>&lt; $750 / мес</dd></div>
+          <div><dt>Клиентов за 3 месяца</dt><dd>15</dd></div>
+          <div><dt>Стоимость клиента</dt><dd class="lime">$150</dd></div>
+          <div><dt>Доходимость до созвона</dt><dd>≈ 50%</dd></div>
+        </dl>
+        <p>Агентство гонит на себя ту же кампанию, что и клиентам, и получает даже больше лидов. Лучший аргумент на продаже: «это сработало на нас».</p>
+      </div>
+      <div class="ch lose rv d1">
+        <h3>Meta Ads <em>дорого</em></h3>
+        <dl>
+          <div><dt>Бюджет 15.07–15.09</dt><dd>$3 593</dd></div>
+          <div><dt>Цена лида</dt><dd>$7,60 (было $4)</dd></div>
+          <div><dt>Цена состоявшегося созвона</dt><dd>≈ $100</dd></div>
+          <div><dt>Клиентов</dt><dd>1–2</dd></div>
+          <div><dt>Стоимость клиента</dt><dd class="red">≈ $1 750+</dd></div>
+          <div><dt>Доходимость до созвона</dt><dd>25–30%</dd></div>
+        </dl>
+        <p>Один статичный баннер «10 лидов для клининга или вернём деньги», лид-форма → таблица → сеттеры пишут в iMessage в течение 5 минут. Много дешёвых заявок от субподрядчиков без юрлица.</p>
+      </div>
+    </div>
+
+    <div class="bars rv" id="bars">
+      <h4>Стоимость одного клиента</h4>
+      <div class="bar"><label>Письма</label><div class="track"><div class="fill g" data-w="8.6">$150</div></div></div>
+      <div class="bar"><label>Meta Ads</label><div class="track"><div class="fill r" data-w="100">≈ $1 750</div></div></div>
+      <p class="cap">Рави: «Давай про Meta даже не будем говорить. Все цифры указывают в одну сторону — идти глубже в холодные письма».</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 DIAGNOSIS -->
+<section class="sec paper" id="diagnosis">
+  <div class="wrap">
+    <span class="num rv">04 — Диагноз</span>
+    <h2 class="rv d1">Спенсер лечит не ту болезнь.</h2>
+    <p class="intro rv d2">Обычно предприниматели гонят продажи и плюют на удержание. Спенсер — редкий обратный случай: всё внимание в качество сервиса и отток, а маркетинг на автопилоте.</p>
+
+    <div class="dialog">
+      <div class="bubble s rv"><small>Спенсер</small>Я думаю, наше узкое место — удержание. Клиенты живут 5,5 месяцев, я хочу держать их по 8.</div>
+      <div class="bubble r rv d1"><small>Рави</small>Если бы тут стояла волшебная коробка — кладёшь $1, получаешь $30 чистой прибыли. Сколько долларов ты бы туда положил?</div>
+      <div class="bubble s rv d2"><small>Спенсер</small>Столько, сколько можно.</div>
+      <div class="bubble r rv d3"><small>Рави</small>Вот. Твоя проблема — <mark>ты недостаточно занимаешься маркетингом и продажами.</mark> Почему ты до сих пор не отправляешь в два раза больше писем?</div>
+    </div>
+
+    <h3 class="rv" style="font-family:var(--display);font-weight:800;font-size:clamp(24px,2.6vw,34px);margin-top:90px;max-width:760px;line-height:1.1">Фреймворк «Критическое ограничение»: в бизнесе всегда одна главная причина, почему он не растёт. И две типичные ошибки.</h3>
+    <div class="errors">
+      <div class="err rv">
+        <div class="x">✕ 1</div>
+        <h3>Найти не то ограничение</h3>
+        <p>Видишь проблему там, где её нет, и тратишь силы мимо.</p>
+        <div class="ex"><b>Спенсер:</b> «Дотяну удержание с 5,5 до 8 месяцев» — хотя бизнес упирается не в это.</div>
+      </div>
+      <div class="err rv d1">
+        <div class="x">✕ 2</div>
+        <h3>Найти верное, но лечить неверно</h3>
+        <p>Понял, что нужно больше продаж, — и побежал в самый дорогой канал.</p>
+        <div class="ex"><b>Спенсер:</b> «Да, нужно больше клиентов… давай раскачаем Meta» — где клиент стоит $1 750 вместо $150.</div>
+      </div>
+    </div>
+
+    <div class="effort">
+      <div class="eff rv">
+        <h4>Путь А</h4>
+        <b>Дотянуть удержание с 5,5 до 8 месяцев</b>
+        <ul>
+          <li>непонятно, какими действиями</li>
+          <li>результат не гарантирован</li>
+          <li>бьёшься со структурным оттоком: агентство — первый счёт, который режут, когда у клиента что-то идёт не так</li>
+        </ul>
+      </div>
+      <div class="eff go rv d1">
+        <h4>Путь Б</h4>
+        <b>Отправлять больше холодных писем</b>
+        <ul>
+          <li>сил нужно в разы меньше</li>
+          <li>конверсия из писем в клиентов уже известна</li>
+          <li>каждый $1 даёт $30</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 LEVER -->
+<section class="sec">
+  <div class="wrap">
+    <span class="num rv">05 — Стратегия самого маленького рычага</span>
+    <h2 class="rv d1">Сколько всего должно сойтись, чтобы это сработало?</h2>
+    <p class="intro rv d2">Рави спрашивает: какое <b>минимальное</b> число вещей должно оказаться правдой, чтобы план выстрелил? Чем меньше допущений — тем надёжнее рычаг.</p>
+    <div class="lever">
+      <div class="lv g rv">
+        <div class="big lime">1</div>
+        <div class="cap">допущение</div>
+        <h3>Масштабировать холодные письма</h3>
+        <ol>
+          <li>Можно отправлять больше писем<i>Спенсер сам сказал, что запас есть. Все остальные цифры уже известны.</i></li>
+        </ol>
+        <p style="font-size:15px;color:#CFCABF;margin-top:16px">Упрётесь — второе допущение: найдётся ещё одна ниша, куда можно писать.</p>
+      </div>
+      <div class="lv r rv d1">
+        <div class="big red">5</div>
+        <div class="cap">допущений</div>
+        <h3>Раскачать Meta Ads</h3>
+        <ol>
+          <li>Доходимость вырастет с 25–30% до уровня писем</li>
+          <li>Цена лида снова упадёт</li>
+          <li>Конверсия в сделку вырастет</li>
+          <li>Эти клиенты проживут столько же<i>95% клиентов из писем — по рекламным данных нет</i></li>
+          <li>CAC упадёт примерно в 10 раз</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 CEILING -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="num rv">06 — Миф о потолке канала</span>
+    <h2 class="rv d1">«А вдруг холодные письма упрутся в потолок?»</h2>
+    <div class="ceiling">
+      <p class="cq rv">«Тогда просто дави на канал, <span class="lime">пока он и правда не упрётся</span>».</p>
+      <div class="cards">
+        <div class="card rv"><b>$100 МЛН В ГОД</b><p>Есть компании такого размера, которые живут только на холодных письмах.</p></div>
+        <div class="card rv d1"><b>$10 000 НА РЕКЛАМУ</b><p>При CPM около $40 это ~250 000 показов по одному разу. «Я исчерпал рынок» — это ложное убеждение.</p></div>
+        <div class="card rv d2"><b>+40 КЛИЕНТОВ</b><p>Это не рост с $180k до $1,8 млн в месяц. Для такой цели потолка письма не увидят.</p></div>
+      </div>
+    </div>
+    <div class="kpi rv">
+      <h4>Как понять, что канал реально сломался</h4>
+      <div class="scale">
+        <span class="pin p1">сейчас $150</span>
+        <span class="pin p2">предел $862</span>
+      </div>
+      <p>Тревогу стоит бить, когда стоимость клиента дорастёт до прибыли первого месяца — <b style="color:var(--ink)">$862</b>. Это почти в 6 раз выше текущей. И даже тогда вы в нуле на старте и всё равно зарабатываете $4 500 с клиента за его жизнь. Просто уже не так быстро.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 CALC -->
+<section class="sec" id="calc">
+  <div class="wrap">
+    <span class="num rv">07 — Покрути сам</span>
+    <h2 class="rv d1">Цена +$700 — и прибыль с клиента почти ×2.</h2>
+    <p class="intro rv d2">Спенсер уже собирался поднять базовый тариф с $2 800 до $3 400. Рави: «Тот, кто может платить $2 800, может платить и $3 500. Никто и глазом не моргнёт». Доплата идёт в прибыль целиком — себестоимость не меняется.</p>
+
+    <div class="calc">
+      <div class="ctrl rv">
+        <div class="rg">
+          <label>Повышение цены <output id="o-raise">+$0</output></label>
+          <input type="range" id="raise" min="0" max="1500" step="50" value="0">
+          <small>Поверх среднего чека $2 300 при марже 37,5%</small>
+        </div>
+        <div class="rg">
+          <label>Сколько живёт клиент <output id="o-months">5,25 мес</output></label>
+          <input type="range" id="months" min="2" max="10" step="0.25" value="5.25">
+          <small>Главная цифра, на которой держится всё остальное</small>
+        </div>
+        <div class="rg">
+          <label>Стоимость привлечения <output id="o-cac">$150</output></label>
+          <input type="range" id="cac" min="50" max="2000" step="25" value="150">
+          <small>$150 — письма, ≈$1 750 — Meta Ads</small>
+        </div>
+        <div class="btn-row">
+          <button class="chip" data-p="0,5.25,150">Как сейчас</button>
+          <button class="chip" data-p="700,5.25,150">Цена $3 500</button>
+          <button class="chip" data-p="700,5.25,1750">Цена $3 500 + Meta</button>
+          <button class="chip" data-p="0,8,150">Удержание 8 мес</button>
+        </div>
+      </div>
+      <div class="res rv d1">
+        <h4>$1 на привлечение превращается в</h4>
+        <div class="ratio" id="ratio">$30</div>
+        <div class="verdict" id="verdict"></div>
+        <div class="rows">
+          <div><span>Прибыль с клиента за жизнь</span><b id="r-ltgp">$4 528</b></div>
+          <div><span>Чистыми в первый месяц</span><b id="r-first">$713</b></div>
+          <div><span>Прибыль с 40 новых клиентов</span><b id="r-40">$175 125</b></div>
+        </div>
+      </div>
+    </div>
+    <p class="calc-note rv">Формула: (2 300 × 0,375 + повышение) × месяцы. Первый месяц = прибыль месяца − CAC.<br>Сравни «Цена $3 500» и «Удержание 8 мес»: повышение цены даёт даже больше. А ведь это одно решение, тогда как удержание — месяцы работы.</p>
+  </div>
+</section>
+
+<!-- 08 PLAN -->
+<section class="sec" id="plan" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="num rv">08 — Что делать по порядку</span>
+    <h2 class="rv d1">План Рави для Спенсера.</h2>
+    <div class="plan-list">
+      <div class="pl rv"><div class="n">01</div><div><h3>Сделать выполнение «пуленепробиваемым»</h3><p>Прежде чем уходить в продажи, убедиться, что команда без тебя выдержит +40 клиентов — 20–30 подключений в месяц. «Пуленепробиваемо» не значит «без проблем». Это значит: клиентов больше, а твоего времени в выполнении — не больше. Иначе уйдёшь в продажи, и всё, что держалось на тебе, развалится.</p><span class="tg">сначала тыл</span></div></div>
+      <div class="pl rv"><div class="n">02</div><div><h3>Разобрать базу: кто живёт 5,5 месяцев</h3><p>Все расчёты стоят на цифре 5,5 месяца. Найти портрет клиентов, которые держатся, и сделать его планкой для отдела продаж. Иначе нагонишь субподрядчиков без юрлица, они уйдут на втором месяце — и через полгода не поймёшь, что сломалось.</p><span class="tg">защитить допущение</span></div></div>
+      <div class="pl rv"><div class="n">03</div><div><h3>Отдать удержание директору по клиентам</h3><p>KPI на первые 3 месяца: не уронить 5,5. Потом ежеквартально: 5,5 → 6 → 6,5, с бонусом за рост. Сам заходишь, только если в еженедельных цифрах видишь, что показатель ползёт вниз. «Хороший сотрудник хочет владеть задачей от начала до конца».</p><span class="tg">убрать руку из банки с печеньем</span></div></div>
+      <div class="pl rv"><div class="n">04</div><div><h3>Удвоить холодные письма</h3><p>Главный рычаг. Давить, пока стоимость клиента не подберётся к $862. Цель — +40 клиентов не к весне, а к концу года.</p><span class="tg">основной фокус</span></div></div>
+      <div class="pl rv"><div class="n">05</div><div><h3>Удвоить YouTube — но не ради лидов</h3><p>Перед созвоном люди идут смотреть канал. Видео прогревают тех, кто пришёл из писем, и поднимают конверсию. Раз в месяц → дважды, раз в неделю → дважды в неделю.</p><span class="tg">усилитель писем</span></div></div>
+      <div class="pl rv"><div class="n">06</div><div><h3>Протестировать цену $3 400–3 500</h3><p>Проверять две вещи: держится ли прибыль с клиента и держатся ли 5,5 месяца. Если уходить станут чуть раньше, но прибыль та же — не страшно: освобождается место под новых.</p><span class="tg">почти ×2 прибыли</span></div></div>
+      <div class="pl rv"><div class="n">07</div><div><h3>Упёрлись — новая ниша, а не новый канал</h3><p>Не Meta, а та же машина писем в соседнюю вертикаль: мойка окон, новогодняя подсветка и другие коммерческие услуги. Сначала выжать клининг, потом 1–2 соседние ниши тем же сценарием.</p><span class="tg">то же, но шире</span></div></div>
+      <div class="pl skip rv"><div class="n">✕</div><div><h3>Пока не делать: допродажи и новые услуги</h3><p>Слишком много допущений: нужно ли это людям, купят ли, заплатят ли, не съест ли новое предложение основное. Получишь два бизнеса внутри одного при марже 35–40%. Если и добавлять — только то, что не конкурирует с основным. Пример Рави: его агентство нанимает клиентам продажников, потому что после роста маркетинга им некогда брать звонки. «Тебе нужен аккаунт-менеджер <i>потому что</i> мы починили маркетинг, а не <i>вместо</i>».</p><span class="tg">потом</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 EXIT -->
+<section class="sec exit">
+  <div class="wrap">
+    <span class="num rv">09 — Куда это ведёт</span>
+    <h2 class="rv d1">«Неплохая зарплата — примерно через 12 месяцев».</h2>
+    <p class="intro rv d2">Сценарий Рави «чисто ради интереса»: три ниши по той же схеме. Агентство на холодных письмах, которое обслуживает офлайн-бизнесы, можно реально продать.</p>
+    <div class="eq rv">
+      <div class="term"><b>$180k</b><small>в месяц сейчас</small></div>
+      <span class="op">×3</span>
+      <div class="term"><b>$540k</b><small>три ниши</small></div>
+      <span class="op">×30%</span>
+      <div class="term"><b>$162k</b><small>чистыми в месяц</small></div>
+    </div>
+    <p class="exit-note rv">Маржу Рави осознанно занижает с 35–40% до 30% — на масштабе она проседает. Сервисный бизнес в этой отрасли может продаваться с мультипликатором 4–6. По нашему счёту, если умножать годовую прибыль (~$1,9 млн), это порядка $8–12 млн.</p>
+  </div>
+</section>
+
+<!-- 10 QUOTES -->
+<section class="sec">
+  <div class="wrap">
+    <span class="num rv">10 — Забрать с собой</span>
+    <h2 class="rv d1">Три мысли, которые работают не только в агентствах.</h2>
+    <div class="quotes">
+      <div class="qt rv"><p>«Все говорят „мы больше всех заботимся о клиентах“. Все говорят „у нас лучший сервис“. Значение имеет одно: сколько чистой прибыли тебе приносит клиент».</p><small>Про то, что такое хороший бизнес</small></div>
+      <div class="qt rv d1"><p>«Лучшей системы продаж не существует: человек попробовал твой продукт, и он сработал на нём самом».</p><small>Про то, почему агентство продаёт себя своим же методом</small></div>
+      <div class="qt rv d2"><p>«Делай больше того, что работает».</p><small>Финальный совет Спенсеру</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 CHECKLIST -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="num rv">11 — Примерь на свой бизнес</span>
+    <h2 class="rv d1">Есть ли у тебя волшебная коробка?</h2>
+    <p class="intro rv d2">Отметь, на что можешь ответить цифрой, а не ощущением.</p>
+    <div class="check" id="check">
+      <div class="ci rv"><div class="bx">✓</div><div><b>Знаю, сколько чистой прибыли приносит клиент за всё время</b><span>Не выручки — прибыли. LTV × маржа.</span></div></div>
+      <div class="ci rv"><div class="bx">✓</div><div><b>Знаю стоимость клиента по каждому каналу отдельно</b><span>Не «реклама в целом», а $150 против $1 750.</span></div></div>
+      <div class="ci rv"><div class="bx">✓</div><div><b>Понимаю, сколько из $1 вернётся и через сколько</b><span>Через месяц и за всю жизнь клиента.</span></div></div>
+      <div class="ci rv"><div class="bx">✓</div><div><b>Назову одно главное ограничение роста</b><span>И проверил, что это не «то, чем мне приятнее заниматься».</span></div></div>
+      <div class="ci rv"><div class="bx">✓</div><div><b>Посчитал, сколько допущений в моём плане роста</b><span>Чем их меньше, тем надёжнее рычаг.</span></div></div>
+      <div class="ci rv"><div class="bx">✓</div><div><b>Знаю, при какой стоимости клиента канал «сломан»</b><span>Порог в цифрах, а не «стало как-то дорого».</span></div></div>
+    </div>
+    <p class="score" id="score">Отмечено: <b>0 из 6</b></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="big">Делай больше<br>того, что <span>работает.</span></div>
+    <p><b style="color:var(--ink)">Источник:</b> видео «After $35M in Revenue, Watch Me Double This $2M Agency in Less Than 30 Min» из серии Constraint Call — Рави Абувала разбирает агентство Спенсера, Outbound Hero.</p>
+    <p>Конспект сделан по расшифровке. Цифры — со слов гостя и в округлениях Рави; оценка стоимости бизнеса в разделе 09 — наш пересчёт. Рекламные вставки ведущего опущены.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var fmt=function(n){return '$'+Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')};
+
+  // progress bar
+  var pb=document.getElementById('progress');
+  addEventListener('scroll',function(){var h=document.documentElement;pb.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
+
+  // magic box
+  var box=document.getElementById('box'),coin=document.getElementById('coin'),stage=box.parentNode;
+  var tin=document.getElementById('tin'),tout=document.getElementById('tout'),n=0;
+  document.getElementById('feed').addEventListener('click',function(){
+    n++;
+    coin.classList.remove('drop');void coin.offsetWidth;coin.classList.add('drop');
+    setTimeout(function(){
+      box.classList.remove('bump');void box.offsetWidth;box.classList.add('bump');
+      var b=document.createElement('span');b.className='burst';b.textContent='+$30';
+      b.style.left=(stage.clientWidth/2-40+(Math.random()*60-30))+'px';
+      b.style.top=(box.offsetTop+box.offsetHeight*0.35)+'px';
+      b.style.setProperty('--dx',(Math.random()*160-80)+'px');
+      stage.appendChild(b);setTimeout(function(){b.remove()},1300);
+      tin.textContent=fmt(n);tout.textContent=fmt(n*30);
+    },420);
+  });
+
+  // reveal + counters + bars
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return;
+    var el=e.target;el.classList.add('in');io.unobserve(el);
+    var c=el.querySelector('[data-count]');
+    if(c){var to=+c.dataset.count,pre=c.dataset.pre||'',suf=c.dataset.suf||'',t0=null;
+      var tick=function(t){if(!t0)t0=t;var p=Math.min((t-t0)/1200,1);c.textContent=pre+Math.round(to*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)}
+    if(el.id==='bars')el.querySelectorAll('.fill').forEach(function(f){f.style.width=f.dataset.w+'%'});
+  })},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+
+  // calculator
+  var R=document.getElementById('raise'),M=document.getElementById('months'),C=document.getElementById('cac');
+  function calc(){
+    var raise=+R.value,m=+M.value,cac=+C.value,monthly=2300*0.375+raise,ltgp=monthly*m,ratio=ltgp/cac;
+    document.getElementById('o-raise').textContent='+'+fmt(raise)+(raise?' → '+fmt(2800+raise):'');
+    document.getElementById('o-months').textContent=m.toString().replace('.',',')+' мес';
+    document.getElementById('o-cac').textContent=fmt(cac);
+    document.getElementById('ratio').textContent=ratio>=10?fmt(ratio):'$'+ratio.toFixed(1).replace('.',',');
+    document.getElementById('r-ltgp').textContent=fmt(ltgp);
+    var first=monthly-cac;document.getElementById('r-first').textContent=(first<0?'−':'')+fmt(Math.abs(first));
+    document.getElementById('r-40').textContent=fmt((ltgp-cac)*40);
+    var v=ratio>=20?'Коробка печатает деньги. Клади столько, сколько влезет.':ratio>=6?'Очень прибыльно. Масштабировать, не раздумывая.':ratio>=3?'Работает, но уже без запаса. Следи за удержанием.':'Канал не окупается как надо. Это не тот рычаг.';
+    if(first<0&&ratio>=3)v+=' Первый месяц в минусе — нужен запас денег.';
+    document.getElementById('verdict').textContent=v;
+  }
+  [R,M,C].forEach(function(i){i.addEventListener('input',calc)});
+  document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){var p=b.dataset.p.split(',');R.value=p[0];M.value=p[1];C.value=p[2];calc()})});
+  calc();
+
+  // checklist
+  var items=document.querySelectorAll('.ci'),score=document.getElementById('score');
+  items.forEach(function(it){it.addEventListener('click',function(){it.classList.toggle('on');
+    var k=document.querySelectorAll('.ci.on').length;
+    score.innerHTML='Отмечено: <b>'+k+' из 6</b>'+(k===6?' — у тебя есть коробка. Клади в неё.':k>=3?' — половина картины есть, остальное посчитай.':'');
+  })});
+})();
+</script>
+</body>
+</html>
